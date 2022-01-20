@@ -42,5 +42,35 @@ $(".saveBtn").on("click",function(){
     localStorage.setItem("schedule", JSON.stringify(schedule));
 });
 
+//populate date function
+var setDate = function(){
+    $("#currentDay").text(moment().format("dddd MMMM Do, YYYY"));
+};
+
+//change colors based on time
+var changeColor = function(){
+    $(".event-container").removeClass("past present future");
+    $(".time-container").each(function(){
+        var time = moment($(this).text(),"LT");
+        if(moment().isSame(time, 'hour')){
+            $(this).parent().find(".event-container").addClass("present");
+        }
+        else if(moment().isAfter(time)){
+            $(this).parent().find(".event-container").addClass("past");
+        }
+        else{
+            $(this).parent().find(".event-container").addClass("future");
+        }
+    });
+};
+
+//interval function to update every 5 minutes
+setInterval(function(){
+    changeColor();
+    setDate();
+},300000)
+
 //initial load
 loadSchedule();
+setDate();
+changeColor();
