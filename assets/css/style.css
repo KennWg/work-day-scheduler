@@ -79,3 +79,7 @@ textarea{
 .event-container {
   text-align: left;
 }
+
+.event-container p {
+  padding-top: 5px;
+}
